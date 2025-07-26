@@ -6,13 +6,16 @@ namespace Niksan.CardGame
 {
     public class ScoreManager : MonoBehaviour
     {
-        public int CurrentScore { get; private set; }
-        public int MatchStreak { get; private set; }
+         int CurrentScore { get;  set; }
+         int MatchStreak { get;  set; }
 
+         const int PER_MATCH_POINTS = 100;
+         const int BONUS = 15;
         private void OnEnable()
         {
             EventBus.OnCardsMatched += OnCardsMatched;
             EventBus.OnCardsMismatched += OnCardsMismatched;
+            ResetScore();
         }
 
         void OnCardsMatched(ICard card,ICard otherCard)
@@ -22,13 +25,14 @@ namespace Niksan.CardGame
 
         void OnCardsMismatched(ICard card, ICard otherCard)
         {
-            ResetScore();
+            ResetStreak();
         }
 
         private void OnDisable()
         {
             EventBus.OnCardsMatched -= OnCardsMatched;
             EventBus.OnCardsMismatched -= OnCardsMismatched;
+            ResetScore();
         }
 
         public void ResetScore()
@@ -41,8 +45,8 @@ namespace Niksan.CardGame
         public void AddMatchScore()
         {
             MatchStreak++;
-            int bonus = MatchStreak * 20;
-            int scoreToAdd = 100 + bonus;
+            int bonus = MatchStreak * BONUS;
+            int scoreToAdd = PER_MATCH_POINTS + bonus;
             CurrentScore += scoreToAdd;
             EventBus.RaiseScoreUpdate(CurrentScore, MatchStreak);
         }

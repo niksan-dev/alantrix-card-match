@@ -11,6 +11,7 @@ namespace Niksan.CardGame
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private RectTransform boardPanel;
         [SerializeField] private GridLayoutGroup gridLayout;
+        private float hudHeight = 150;
         public void GenerateBoard(LevelConfig config)
         {
             ClearBoard();
@@ -24,9 +25,7 @@ namespace Niksan.CardGame
             float cellWidth = panelWidth / config.columns;
             float cellHeight = panelHeight / config.rows;
             float size = Mathf.Min(cellWidth, cellHeight);
-
-           
-           
+            
             gridLayout.cellSize = new Vector2(size, size);
             // Instantiate shuffled pairs of cards
             var pairs = CardUtility.GenerateShuffledPairs(config.cardFaces, total / 2);
