@@ -4,28 +4,24 @@ using UnityEngine;
 
 namespace Niksan.CardGame
 {
+   /// <summary>
+    /// Tracks and updates the player's score and match streaks.
+    /// </summary>
     public class ScoreManager : MonoBehaviour
     {
-        internal int CurrentScore { get;  set; }
-         int MatchStreak { get;  set; }
+        internal int CurrentScore { get; private set; }
+        private int matchStreak;
 
-         const int PER_MATCH_POINTS = 100;
-         const int BONUS = 15;
+        private const int PER_MATCH_POINTS = 100;
+        private const int BONUS_MULTIPLIER = 15;
+
+        #region Unity Events
+
         private void OnEnable()
         {
             EventBus.OnCardsMatched += OnCardsMatched;
             EventBus.OnCardsMismatched += OnCardsMismatched;
             ResetScore();
-        }
-
-        void OnCardsMatched(ICard card,ICard otherCard)
-        {
-            AddMatchScore();
-        }
-
-        void OnCardsMismatched(ICard card, ICard otherCard)
-        {
-            ResetStreak();
         }
 
         private void OnDisable()
@@ -35,26 +31,54 @@ namespace Niksan.CardGame
             ResetScore();
         }
 
+        #endregion
+
+        /// <summary>
+        /// Called when two matching cards are found.
+        /// </summary>
+        private void OnCardsMatched(ICard cardA, ICard cardB)
+        {
+            AddMatchScore();
+        }
+
+        /// <summary>
+        /// Called when two flipped cards do not match.
+        /// </summary>
+        private void OnCardsMismatched(ICard cardA, ICard cardB)
+        {
+            ResetStreak();
+        }
+
+        /// <summary>
+        /// Resets both score and streak.
+        /// </summary>
         public void ResetScore()
         {
             CurrentScore = 0;
-            MatchStreak = 0;
-            EventBus.RaiseScoreUpdate(CurrentScore, MatchStreak);
+            matchStreak = 0;
+            EventBus.RaiseScoreUpdate(CurrentScore, matchStreak);
         }
 
-        public void AddMatchScore()
+        /// <summary>
+        /// Increases score and streak when a match occurs.
+        /// </summary>
+        private void AddMatchScore()
         {
-            MatchStreak++;
-            int bonus = MatchStreak * BONUS;
+            matchStreak++;
+            int bonus = matchStreak * BONUS_MULTIPLIER;
             int scoreToAdd = PER_MATCH_POINTS + bonus;
             CurrentScore += scoreToAdd;
-            EventBus.RaiseScoreUpdate(CurrentScore, MatchStreak);
+
+            EventBus.RaiseScoreUpdate(CurrentScore, matchStreak);
         }
 
-        public void ResetStreak()
+        /// <summary>
+        /// Resets the match streak when a mismatch occurs.
+        /// </summary>
+        private void ResetStreak()
         {
-            MatchStreak = 0;
-            EventBus.RaiseScoreUpdate(CurrentScore, MatchStreak);
+            matchStreak = 0;
+            EventBus.RaiseScoreUpdate(CurrentScore, matchStreak);
         }
     }
 }

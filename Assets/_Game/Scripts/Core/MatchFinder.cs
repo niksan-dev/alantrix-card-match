@@ -5,16 +5,21 @@ using UnityEngine;
 
 namespace Niksan.CardGame
 {
+    /// <summary>
+    /// Handles logic for matching flipped cards and tracking game state.
+    /// </summary>
     public class MatchFinder : MonoBehaviour
     {
-        private Queue<ICard> flipQueue = new Queue<ICard>();
-        private List<ICard> revealedCards = new List<ICard>();
-        private HashSet<ICard> matchedCards = new HashSet<ICard>();
-
+        [Header("Settings")]
+        [Tooltip("Delay before checking matched cards.")]
         public float checkDelay = 0.5f;
 
-        private int totalCards;
+        private Queue<ICard> flipQueue = new Queue<ICard>();   // Cards waiting for match check
+        private HashSet<ICard> matchedCards = new HashSet<ICard>(); // Successfully matched cards
 
+        private int totalCards; // Total cards in current level
+
+        #region Unity Events
 
         private void OnEnable()
         {
@@ -26,27 +31,40 @@ namespace Niksan.CardGame
             EventBus.OnCardClicked -= HandleCardClick;
         }
 
+        #endregion
+
+        /// <summary>
+        /// Initializes the MatchFinder for a new level.
+        /// </summary>
+        /// <param name="total">Total number of cards on the board.</param>
         public void Init(int total)
         {
             totalCards = total;
-            revealedCards.Clear();
             matchedCards.Clear();
             flipQueue.Clear();
         }
 
-         void HandleCardClick(ICard clicked)
+        /// <summary>
+        /// Handles when a card is clicked. Adds it to the queue for matching.
+        /// </summary>
+        private void HandleCardClick(ICard clicked)
         {
-            if (clicked.IsFlipped || matchedCards.Contains(clicked)) return;
+            if (clicked.IsFlipped || matchedCards.Contains(clicked))
+                return;
 
             clicked.Reveal();
             flipQueue.Enqueue(clicked);
 
+            // Only process when at least 2 cards are flipped
             if (flipQueue.Count >= 2)
             {
                 StartCoroutine(ProcessQueue());
             }
         }
 
+        /// <summary>
+        /// Processes pairs of cards to determine matches or mismatches.
+        /// </summary>
         private IEnumerator ProcessQueue()
         {
             while (flipQueue.Count >= 2)
@@ -58,15 +76,19 @@ namespace Niksan.CardGame
 
                 if (first.ID == second.ID)
                 {
+                    // Match found
                     matchedCards.Add(first);
                     matchedCards.Add(second);
                     EventBus.RaiseCardsMatched(first, second);
 
                     if (matchedCards.Count >= totalCards)
+                    {
                         EventBus.RaiseLevelCompleted();
-                } 
+                    }
+                }
                 else
                 {
+                    // No match — hide both
                     first.Hide();
                     second.Hide();
                     EventBus.RaiseCardsMismatched(first, second);
@@ -74,9 +96,11 @@ namespace Niksan.CardGame
             }
         }
 
-        public void ResetMatches()                                                                                                                                                                                                        
+        /// <summary>
+        /// Resets all internal states (used when restarting the level).
+        /// </summary>
+        public void ResetMatches()
         {
-            revealedCards.Clear();
             matchedCards.Clear();
             flipQueue.Clear();
         }

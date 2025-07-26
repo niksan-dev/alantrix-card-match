@@ -5,27 +5,53 @@ using UnityEngine;
 
 namespace Niksan.CardGame
 {
+    /// <summary>
+    /// Singleton Sound Manager that plays sound effects based on sound type.
+    /// </summary>
     public class SoundManager : MonoBehaviour
     {
-        public static SoundManager instance;
-        [Header("Audio")]
+        public static SoundManager Instance { get; private set; }
+
+        [Header("Audio Clips")]
         [SerializeField] private List<SoundSFX> audioClips = new List<SoundSFX>();
-        private Dictionary<SoundType,AudioSource> sounds = new Dictionary<SoundType, AudioSource>();
+
+        private Dictionary<SoundType, AudioSource> sounds = new();
 
         private void Awake()
         {
-            instance = this;
+            // Ensure singleton
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            // Populate dictionary
             foreach (var audio in audioClips)
             {
-                if(!sounds.ContainsKey(audio.soundType))
-                    sounds.Add(audio.soundType,audio.sfx);
+                if (!sounds.ContainsKey(audio.soundType))
+                {
+                    sounds.Add(audio.soundType, audio.sfx);
+                }
             }
         }
 
+        /// <summary>
+        /// Plays the sound corresponding to the given sound type.
+        /// </summary>
         public void PlaySound(SoundType soundType)
         {
-            if(!sounds.ContainsKey(soundType))
-                sounds[soundType].Play();
+            if (sounds.TryGetValue(soundType, out AudioSource source))
+            {
+                source.Play();
+            }
+            else
+            {
+                Debug.LogWarning($"SoundManager: Sound type '{soundType}' not found.");
+            }
         }
     }
 }
