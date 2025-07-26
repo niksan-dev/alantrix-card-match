@@ -6,6 +6,7 @@ namespace Niksan.CardGame
 {
     public static class EventBus
     {
+        public static event Action OnClickPlay;
         public static event Action<int , int > OnScoreUpdate;
         public static event Action<ICard> OnCardClicked;
         public static event Action<ICard, ICard> OnCardsMatched;
@@ -23,5 +24,6 @@ namespace Niksan.CardGame
         public static void RaiseCardClicked(ICard card) => OnCardClicked?.Invoke(card);
         
         public static void RaiseScoreUpdate(int score, int streak) => OnScoreUpdate?.Invoke(score,streak);
+        public static void RaiseClickPlay() => OnClickPlay?.Invoke();
     }
 }

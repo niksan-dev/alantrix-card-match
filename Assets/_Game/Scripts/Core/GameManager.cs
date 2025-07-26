@@ -15,6 +15,11 @@ namespace Niksan.CardGame
 
         void Start()
         {
+           
+        }
+
+        public void StartGame()
+        {
             totalCards = levels[currentLevel].TotalCards; // e.g. set from level data
             matchFinder.Init(totalCards);
             boardGenerator.GenerateBoard(levels[currentLevel]);
