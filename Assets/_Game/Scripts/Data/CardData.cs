@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Niksan.CardGame
+namespace Niksan.CardGame.Data
 {
     [CreateAssetMenu(menuName = "CardGame/CardData")]
     public class CardData : ScriptableObject
