@@ -6,7 +6,7 @@ namespace Niksan.CardGame
 {
     public class ScoreManager : MonoBehaviour
     {
-         int CurrentScore { get;  set; }
+        internal int CurrentScore { get;  set; }
          int MatchStreak { get;  set; }
 
          const int PER_MATCH_POINTS = 100;
