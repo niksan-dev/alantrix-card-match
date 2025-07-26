@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using Niksan.CardGame.Data;
 namespace Niksan.CardGame
 {
 
