@@ -88,6 +88,8 @@ GameObject:
   - component: {fileID: 4335039723452619220}
   - component: {fileID: 6502227337730636539}
   - component: {fileID: 8427523357184607924}
+  - component: {fileID: 792090674624296623}
+  - component: {fileID: -354535047717639370}
   m_Layer: 5
   m_Name: CardView
   m_TagString: Untagged
@@ -199,6 +201,34 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &792090674624296623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914788364853941918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8101c4d24f79124408bcd0d954c8a4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontImage: {fileID: 281516890960988115}
+  frontRoot: {fileID: 3226732602334071861}
+  backRoot: {fileID: 6974235837763743222}
+  flipDuration: 0.25
+--- !u!114 &-354535047717639370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914788364853941918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2aa42f4ea962584fa47b994f36529bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3226732602334071861
 GameObject:
   m_ObjectHideFlags: 0

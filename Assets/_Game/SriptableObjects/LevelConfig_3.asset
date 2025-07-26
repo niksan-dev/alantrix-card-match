@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ebc240ffffa5241aaeaf1292bf103c, type: 3}
+  m_Name: LevelConfig_3
+  m_EditorClassIdentifier: 
+  rows: 4
+  columns: 4
+  cardFaces:
+  - {fileID: 222036413, guid: a453fc2f6fa54e847b7e1b3bceef628b, type: 3}
+  - {fileID: 1498457064, guid: a453fc2f6fa54e847b7e1b3bceef628b, type: 3}
+  - {fileID: 948419554, guid: a453fc2f6fa54e847b7e1b3bceef628b, type: 3}
+  - {fileID: 912940744, guid: a453fc2f6fa54e847b7e1b3bceef628b, type: 3}
+  - {fileID: -869340094, guid: a453fc2f6fa54e847b7e1b3bceef628b, type: 3}
+  - {fileID: -260146018, guid: a453fc2f6fa54e847b7e1b3bceef628b, type: 3}
+  - {fileID: -417724798, guid: a453fc2f6fa54e847b7e1b3bceef628b, type: 3}
+  - {fileID: 695829114, guid: a453fc2f6fa54e847b7e1b3bceef628b, type: 3}
+  levelID: Level_3
+  displayName: 4 x 4
+  difficulty: 0
